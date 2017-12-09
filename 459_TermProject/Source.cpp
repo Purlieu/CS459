@@ -4,8 +4,9 @@
 #include <stdlib.h>
 
 
-static GLfloat lOnePos[] = {0.0, 0.0, 0.0, 1.0 };
-static GLfloat lTwoPos[] = { 0.0, 1.0, 2.2, 1.0 };
+static GLfloat lOnePos[] = {0.0, 2.0, 0.0, 1.0 };
+static GLfloat lTwoPos[] = { 3.0, 2.0, 0.0, 1.0 };
+static GLfloat lThreePos[] = { -3.0, 2.0, 0.0, 1.0 };
 
 static GLfloat white[] = { 1.0, 1.0, 1.0, 1.0 };
 static GLfloat black[] = { 0.0, 0.0, 0.0, 1.0 };
@@ -22,6 +23,12 @@ float ydiff = 0.0f;
 
 bool mouseDown = false;
 bool rotateState = true;
+bool lightsOutOne = false;
+bool lightsOutTwo = false;
+
+bool mLightOne = false;
+bool mLightTwo = false;
+bool mLightThree = false;
 
 void mouse(int button, int state, int x, int y)
 {
@@ -54,6 +61,28 @@ void keyboard(unsigned char key, int x, int y)
 {
 	static int polygonmode[2];
 	switch (key) {
+	case '1':
+		if (!lightsOutOne) {
+			glDisable(GL_LIGHT0);
+			lightsOutOne = true;
+		}
+		else if (lightsOutOne) {
+			glEnable(GL_LIGHT0);
+			lightsOutOne = false;
+		}
+		glutPostRedisplay();
+		break;
+	case '2':
+		if (!lightsOutTwo) {
+			glDisable(GL_LIGHT1);
+			lightsOutTwo = true;
+		}
+		else if (lightsOutTwo) {
+			glEnable(GL_LIGHT1);
+			lightsOutTwo = false;
+		}
+		glutPostRedisplay();
+		break;
 	case 'r':
 		rotateState = true;
 		break;
@@ -61,28 +90,103 @@ void keyboard(unsigned char key, int x, int y)
 		exit(0);
 		break;
 	case 'x':
-		lOnePos[0] = lOnePos[0] + 0.2;
+		if (mLightOne) {
+			lOnePos[0] = lOnePos[0] + 0.2;
+
+		}
+		else if (mLightTwo) {
+			lTwoPos[0] = lTwoPos[0] + 0.2;
+
+		}
+		else if (mLightThree) {
+			lThreePos[0] = lThreePos[0] + 0.2;
+		}
 		glutPostRedisplay();
 		break;
 	case 'X':
-		lOnePos[0] = lOnePos[0] - 0.2;
+		if (mLightOne) {
+			lOnePos[0] = lOnePos[0] - 0.2;
+
+		}
+		else if (mLightTwo) {
+			lTwoPos[0] = lTwoPos[0] - 0.2;
+
+		}
+		else if (mLightThree) {
+			lThreePos[0] = lThreePos[0] - 0.2;
+		}
 		glutPostRedisplay();
 		break;
 	case 'y':
-		lOnePos[1] = lOnePos[1] + 0.2;
+		if (mLightOne) {
+			lOnePos[1] = lOnePos[1] + 0.2;
+
+		}
+		else if (mLightTwo) {
+			lTwoPos[1] = lTwoPos[1] + 0.2;
+
+		}
+		else if (mLightThree) {
+			lThreePos[1] = lThreePos[1] + 0.2;
+		}		
 		glutPostRedisplay();
 		break;
 	case 'Y':
-		lOnePos[1] = lOnePos[1] - 0.2;
+		if (mLightOne) {
+			lOnePos[1] = lOnePos[1] - 0.2;
+
+		}
+		else if (mLightTwo) {
+			lTwoPos[1] = lTwoPos[1] - 0.2;
+
+		}
+		else if (mLightThree) {
+			lThreePos[1] = lThreePos[1] - 0.2;
+		}
 		glutPostRedisplay();
 		break;
 	case 'z':
-		lOnePos[2] = lOnePos[2] + 0.2;
+		if (mLightOne) {
+			lOnePos[2] = lOnePos[2] + 0.2;
+
+		}
+		else if (mLightTwo) {
+			lTwoPos[2] = lTwoPos[2] + 0.2;
+
+		}
+		else if (mLightThree) {
+			lThreePos[2] = lThreePos[2] + 0.2;
+		}
 		glutPostRedisplay();
 		break;
 	case 'Z':
-		lOnePos[2] = lOnePos[2] - 0.2;
+		if (mLightOne) {
+			lOnePos[2] = lOnePos[2] - 0.2;
+
+		}
+		else if (mLightTwo) {
+			lTwoPos[2] = lTwoPos[2] - 0.2;
+
+		}
+		else if (mLightThree) {
+			lThreePos[2] = lThreePos[2] - 0.2;
+		}		
 		glutPostRedisplay();
+		break;
+	case '8':
+		mLightOne = true;
+		mLightTwo = false;
+		mLightThree = false;
+		break;
+	case '9':
+		mLightOne = false;
+		mLightTwo = true;
+		mLightThree = false;
+		break;
+	case '0':
+		mLightOne = false;
+		mLightTwo = false;
+		mLightThree = true;
 		break;
 	case 'w':
 		glGetIntegerv(GL_POLYGON_MODE, polygonmode);
@@ -107,12 +211,9 @@ void display(void)
 	glMaterialfv(GL_FRONT, GL_EMISSION, white);
 
 	//Lookat Camera
-	gluLookAt(
-		0.0f, 0.0f, 10.0f,
-		0.0f, 0.0f, 0.0f,
-		0.0f, 1.0f, 0.0f);
+	
 
-	glPushMatrix();
+	/*glPushMatrix();
 	glLightfv(GL_LIGHT0, GL_POSITION, lOnePos);
 	glRotatef(xrot, 1.0f, 0.0f, 0.0f);
 	glRotatef(-yrot, 0.0f, 1.0f, 0.0f);
@@ -121,24 +222,61 @@ void display(void)
 	glutSolidSphere(.08, 25, 25);
 	glPopMatrix();
 
+	glPushMatrix();
+	glLightfv(GL_LIGHT1, GL_POSITION, lTwoPos);
+	glRotatef(xrot, 1.0f, 0.0f, 0.0f);
+	glRotatef(-yrot, 0.0f, 1.0f, 0.0f);
+	glTranslatef(lTwoPos[0], lTwoPos[1], lTwoPos[2]);
+	glMaterialfv(GL_FRONT, GL_EMISSION, blue);
+	glutSolidSphere(.08, 25, 25);
+	glPopMatrix();
+	*/
+
+	glTranslatef(0.0f, 0.0f, -12.0f);
+
+
+
+	glPushMatrix();
+	glLightfv(GL_LIGHT1, GL_DIFFUSE, red);
+	glLightfv(GL_LIGHT1, GL_POSITION, lOnePos);
+	glRotatef(xrot, 1.0f, 0.0f, 0.0f);
+	glRotatef(-yrot, 0.0f, 1.0f, 0.0f);
+	glTranslatef(lOnePos[0], lOnePos[1], lOnePos[2]);
+	glColor3f(1.0f, 0.0f, 0.0f);
+	glutSolidSphere(.08, 25, 25);
 	glMaterialfv(GL_FRONT, GL_EMISSION, black);
+	glPopMatrix();
+
+	glPushMatrix();
+	glLightfv(GL_LIGHT2, GL_DIFFUSE, green);
+	glLightfv(GL_LIGHT2, GL_POSITION, lTwoPos);
+	glRotatef(xrot, 1.0f, 0.0f, 0.0f);
+	glRotatef(-yrot, 0.0f, 1.0f, 0.0f);
+	glTranslatef(lTwoPos[0], lTwoPos[1], lTwoPos[2]);
+	glColor3f(0.0f, 1.0f, 0.0f);
+	glutSolidSphere(.08, 25, 25);
+	glMaterialfv(GL_FRONT, GL_EMISSION, black);
+	glPopMatrix();
+
+	glPushMatrix();
+	glLightfv(GL_LIGHT3, GL_DIFFUSE, blue);
+	glLightfv(GL_LIGHT3, GL_POSITION, lThreePos);
+	glRotatef(xrot, 1.0f, 0.0f, 0.0f);
+	glRotatef(-yrot, 0.0f, 1.0f, 0.0f);
+	glColor3f(0.0f, 0.0f, 1.0f);
+	glTranslatef(lThreePos[0], lThreePos[1], lThreePos[2]);
+	glutSolidSphere(.08, 25, 25);
+	glMaterialfv(GL_FRONT, GL_EMISSION, black);
+	glPopMatrix();
+
 	//Polygon One
 	glPushMatrix();
 	glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, 1);
 	glRotatef(xrot, 1.0f, 0.0f, 0.0f);
 	glRotatef(-yrot, 0.0f, 1.0f, 0.0f);
-	glTranslatef(3.0, 0.0, 0.0);
+	glTranslatef(0.0, 0.0, 0.0);
 	glColor3f(1.0, 1.0, 0.0);
 	glutSolidTeapot(1.0);
-	glPopMatrix();
-
-	//Polygon Two
-	glPushMatrix();
-	glRotatef(xrot, 1.0f, 0.0f, 0.0f);
-	glRotatef(-yrot, 0.0f, 1.0f, 0.0f);
-	glTranslatef(-3.0, 0.0, 0.0);
-	glColor3f(0.0, 1.0, 0.0);
-	glutSolidSphere(.8, 25, 25);
 	glPopMatrix();
 
 
