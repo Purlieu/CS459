@@ -143,6 +143,8 @@ void keyboard(unsigned char key, int x, int y)
 			smoothOrFlat = false;
 		else
 			smoothOrFlat = true;
+		glutPostRedisplay();
+		break;
 	case 'c':
 		lOnePos[0] = 0.0;
 		lOnePos[1] = 0.0;
