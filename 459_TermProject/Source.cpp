@@ -478,7 +478,8 @@ void lightsOneRender(void) {
 	else {
 		glLightfv(GL_LIGHT1, GL_DIFFUSE, lightOneColor);
 		glMaterialf(GL_FRONT, GL_SHININESS, 1.0);
-	}	glTranslatef(lOnePos[0], lOnePos[1], lOnePos[2]);
+	}
+	glTranslatef(lOnePos[0], lOnePos[1], lOnePos[2]);
 	glMaterialfv(GL_FRONT, GL_EMISSION, black);
 	glColor3f(1.0f, 0.0f, 0.0f);
 	glutSolidSphere(.08, 25, 25);
@@ -594,7 +595,7 @@ void resize(int w, int h) {
 	glViewport(0, 0, (GLsizei)w, (GLsizei)h);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(45.0, (GLfloat)w / (GLfloat)h, 1.5, 20.0);
+	gluPerspective(20.0, (GLfloat)w / (GLfloat)h, 1.5, 20.0);
 	glMatrixMode(GL_MODELVIEW);
 
 }
@@ -603,7 +604,7 @@ int main(int argc, char** argv)
 {
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
-	glutInitWindowSize(1200, 1200);
+	glutInitWindowSize(400, 400);
 		
 	glutCreateWindow("CS459 - Term Project");
 	initRendering();
