@@ -76,7 +76,6 @@ void writemessage()
 		   f, g, h, j, k, l --------- (f, g Red +-, hj, Green +-. kl, Blue +- \n\
 		   p ------------------------  reset to original position and color\n\
 		   c ------------------------  closeup mode\n\
-	       o ------------------------  change to spotlight mode\n\
 		   (Color Changing Needs Light source 8,9,0 Chosen first)\n\
 		   \n\n\n\
 		   Possible Steps:\n\
@@ -412,15 +411,15 @@ void keyboard(unsigned char key, int x, int y)
 		break;
 	case 'Z':
 		if (mLightOne) {
-			lOnePos[2] = lOnePos[2] - 0.2;
+			lOnePos[2] = lOnePos[2] - 0.5;
 
 		}
 		else if (mLightTwo) {
-			lTwoPos[2] = lTwoPos[2] - 0.2;
+			lTwoPos[2] = lTwoPos[2] - 0.5;
 
 		}
 		else if (mLightThree) {
-			lThreePos[2] = lThreePos[2] - 0.2;
+			lThreePos[2] = lThreePos[2] - 0.5;
 		}
 		glutPostRedisplay();
 		break;
