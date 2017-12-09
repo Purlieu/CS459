@@ -19,6 +19,8 @@ static GLfloat direction[] = { 0.0, 0.0, -1.0 };
 static GLfloat angle_in_degree = 90.0;
 static GLfloat exponent_val = 10.0;
 
+bool smoothOrFlat = false;
+
 float xrot = 0.0f;
 float yrot = 0.0f;
 
@@ -68,6 +70,7 @@ void writemessage()
 		   r ------------------------- Rotates the object\n\
 		   t ------------------------- Translate the object\n\
 		   s ------------------------- Scale the object\n\
+		   v ------------------------- Change flat or smooth model\n\
 		   1, 2, 3, 4 ---------------- Turn off light sources\n\
 		   o ------------------------- Change from Local Light Sources to Distant Lights\n\
 		   8, 9, 0, -----------------  Select lighting objects to move(GL_LIGHT0....GL_LIGHT3)\n\
@@ -135,6 +138,11 @@ void keyboard(unsigned char key, int x, int y)
 {
 	static int polygonmode[2];
 	switch (key){
+	case 'v':
+		if(smoothOrFlat)
+			smoothOrFlat = false;
+		else
+			smoothOrFlat = true;
 	case 'c':
 		lOnePos[0] = 0.0;
 		lOnePos[1] = 0.0;
@@ -526,6 +534,10 @@ void lightsThreeRender(void) {
 
 void polygonOneRender(void) {
 	glPushMatrix();
+	if (smoothOrFlat)
+		glShadeModel(GL_SMOOTH);
+	else
+		glShadeModel(GL_FLAT);
 	glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, 0.1);
 	glTranslatef(xtranslate, -ytranslate, 0.0);
 	glScalef(scalefactor, scalefactor, scalefactor);
