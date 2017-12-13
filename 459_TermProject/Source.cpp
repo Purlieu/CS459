@@ -1,3 +1,23 @@
+/*******************************************
+/* Citations: 
+/* dragon.off file included, downloaded from http://www.holmes3d.net/graphics/offfiles/
+/*
+////////////////////////////////////////////////////////
+// The idea of readOFF() method is borrowed from a
+// template that Dr.Zeyun Yu provided.
+// Used the calculateNormal() method that was used in Lab 08
+// at UW-Milwaukee
+
+//Modified by: Reihaneh Rostami
+//Used by: Michael Dorsey and Jake Wysor
+
+//Used methods that were provided in sample .cpp files
+//along with the sample_polygon.off file
+//Provied by Dr. Zeyun Yu
+//These methods include partial implementation of
+//rotation and menu, along with keyboard functions
+////////////////////////////////////////////////////////
+*/
 #include <GL/glut.h>
 #include <math.h>
 #include <stdio.h>
@@ -194,6 +214,7 @@ void writemessage()
 		   o ------------------------- Change from Local Light Sources to Distant Lights\n\
 		   8, 9, 0, -----------------  Select lighting objects to move(GL_LIGHT0....GL_LIGHT3)\n\
 		   n, m, --------------------  Draw 2 separate glut function polygons\n\
+		   b ------------------------  Draw off file.  Included is a dragon.off file\n\
 		   z, Z, w, W, y, Y ---------  Move correspoding light source after selecting 8, 9, 0\n\
 		   f, g, h, j, k, l --------- (f, g Red +-, hj, Green +-. kl, Blue +- \n\
 		   p ------------------------  reset to original position and color\n\
